@@ -14,7 +14,8 @@ export const generateArticle = async (apiKey: string, topic: string): Promise<Ar
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
+        // Remove 'Bearer' prefix, use API key directly
+        'x-goog-api-key': apiKey
       },
       body: JSON.stringify({
         contents: [{
@@ -38,7 +39,9 @@ export const generateArticle = async (apiKey: string, topic: string): Promise<Ar
     });
 
     if (!response.ok) {
-      throw new Error('Failed to generate article');
+      const errorData = await response.json();
+      console.error('API Error:', errorData);
+      throw new Error(errorData.error?.message || 'Failed to generate article');
     }
 
     const data = await response.json();
@@ -51,7 +54,7 @@ export const generateArticle = async (apiKey: string, topic: string): Promise<Ar
     };
   } catch (error) {
     console.error('Error generating article:', error);
-    toast.error('Failed to generate article');
+    toast.error('Failed to generate article. Please check your API key.');
     throw error;
   }
 };
