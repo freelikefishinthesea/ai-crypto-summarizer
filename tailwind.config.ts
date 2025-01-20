@@ -57,23 +57,33 @@ export default {
         sans: ["Inter var", "system-ui", "sans-serif"],
       },
       animation: {
-        "card-hover": "card-hover 0.3s ease-in-out forwards",
+        "card-hover": "card-hover 0.5s ease-out forwards",
         "fade-in": "fade-in 0.5s ease-out forwards",
+        "scale-in": "scale-in 0.2s ease-out",
+        "slide-in": "slide-in 0.2s ease-out",
       },
       keyframes: {
         "card-hover": {
           "0%": { transform: "translateY(0)" },
-          "100%": { transform: "translateY(-4px)" },
+          "100%": { transform: "translateY(-8px)" },
         },
         "fade-in": {
           "0%": { 
             opacity: "0",
-            transform: "translateY(10px)"
+            transform: "translateY(20px)"
           },
           "100%": {
             opacity: "1",
             transform: "translateY(0)"
           }
+        },
+        "scale-in": {
+          "0%": { transform: "scale(0.95)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" }
+        },
+        "slide-in": {
+          "0%": { transform: "translateX(-20px)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" }
         },
       },
     },

@@ -48,19 +48,26 @@ const Index = () => {
     : mockNews.filter(news => news.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-background bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-background via-background to-muted">
-      <div className="container py-12 px-4 sm:px-6 lg:px-8">
-        <header className="mb-12 text-center relative">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Newspaper className="w-12 h-12 text-primary animate-pulse" />
-            <h1 className="text-4xl md:text-6xl font-black text-foreground bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary/80 to-primary/60 drop-shadow-sm">
-              AI & Crypto News
-            </h1>
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/20 via-background to-background -z-10" />
+      <div className="absolute inset-0 bg-[url('/placeholder.svg')] opacity-30 mix-blend-soft-light -z-10" />
+      
+      <div className="container py-16 px-4 sm:px-6 lg:px-8 relative">
+        <header className="mb-16 text-center relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-primary/2 to-transparent rounded-3xl blur-3xl" />
+          <div className="relative">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="p-3 bg-primary/10 rounded-2xl backdrop-blur-sm ring-1 ring-primary/20">
+                <Newspaper className="w-12 h-12 text-primary animate-pulse" />
+              </div>
+              <h1 className="text-5xl md:text-7xl font-black bg-clip-text text-transparent bg-gradient-to-r from-primary via-primary/80 to-primary/60 drop-shadow-sm">
+                AI & Crypto News
+              </h1>
+            </div>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto font-medium leading-relaxed">
+              Stay updated with the latest in artificial intelligence and cryptocurrency
+            </p>
           </div>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
-            Stay updated with the latest in artificial intelligence and cryptocurrency
-          </p>
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent -z-10 rounded-3xl blur-3xl" />
         </header>
 
         <CategoryFilter
@@ -69,7 +76,7 @@ const Index = () => {
           onSelectCategory={setSelectedCategory}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredNews.map((news, index) => (
             <div
               key={news.id}
