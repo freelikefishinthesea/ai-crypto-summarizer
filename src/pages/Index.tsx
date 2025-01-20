@@ -48,13 +48,13 @@ const Index = () => {
     : mockNews.filter(news => news.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container py-8">
-        <header className="mb-12">
-          <h1 className="text-4xl font-bold text-text-primary mb-4">
+    <div className="min-h-screen bg-background bg-gradient-to-br from-background to-muted/50">
+      <div className="container py-12 px-4 sm:px-6 lg:px-8">
+        <header className="mb-12 text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-foreground mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80">
             AI & Crypto News
           </h1>
-          <p className="text-text-secondary text-lg">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Stay updated with the latest in artificial intelligence and cryptocurrency
           </p>
         </header>

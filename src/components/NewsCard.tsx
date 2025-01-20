@@ -1,5 +1,7 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Bitcoin, Cpu } from "lucide-react";
 
 interface NewsCardProps {
   title: string;
@@ -10,19 +12,27 @@ interface NewsCardProps {
 }
 
 const NewsCard = ({ title, summary, category, date, source }: NewsCardProps) => {
+  const CategoryIcon = category === "Crypto" ? Bitcoin : Cpu;
+
   return (
-    <Card className="p-6 bg-card hover:shadow-lg transition-all duration-300 hover:animate-card-hover cursor-pointer">
+    <Card className="group p-6 bg-card hover:shadow-xl transition-all duration-300 hover:animate-card-hover cursor-pointer border border-border/50">
       <div className="flex flex-col gap-4">
         <div className="flex justify-between items-start">
-          <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+          <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary ring-1 ring-inset ring-primary/20">
+            <CategoryIcon className="w-4 h-4" />
             {category}
           </span>
-          <span className="text-sm text-text-secondary">{date}</span>
+          <span className="text-sm text-muted-foreground">{date}</span>
         </div>
-        <h3 className="text-xl font-semibold text-text-primary line-clamp-2">{title}</h3>
-        <p className="text-text-secondary line-clamp-3">{summary}</p>
+        <h3 className="text-xl font-bold text-foreground line-clamp-2 group-hover:text-primary transition-colors">
+          {title}
+        </h3>
+        <p className="text-muted-foreground line-clamp-3">{summary}</p>
         <div className="flex justify-between items-center mt-2">
-          <span className="text-sm text-text-secondary">Source: {source}</span>
+          <span className="text-sm text-muted-foreground">Source: {source}</span>
+          <Button variant="ghost" className="text-primary hover:text-primary/80">
+            Read More →
+          </Button>
         </div>
       </div>
     </Card>
