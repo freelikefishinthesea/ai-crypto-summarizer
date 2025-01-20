@@ -25,11 +25,11 @@ const CategoryFilter = ({ categories, selectedCategory, onSelectCategory }: Cate
   };
 
   return (
-    <div className="flex flex-wrap gap-2 mb-8">
+    <div className="flex flex-wrap gap-3 mb-12 justify-center">
       <Button
         variant={selectedCategory === "all" ? "default" : "outline"}
         onClick={() => onSelectCategory("all")}
-        className="rounded-full transition-all duration-300 hover:scale-105"
+        className="rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
       >
         All
       </Button>
@@ -38,7 +38,11 @@ const CategoryFilter = ({ categories, selectedCategory, onSelectCategory }: Cate
           key={category}
           variant={selectedCategory === category ? "default" : "outline"}
           onClick={() => onSelectCategory(category)}
-          className="rounded-full transition-all duration-300 hover:scale-105 gap-2"
+          className={`rounded-full transition-all duration-300 hover:scale-105 gap-2 shadow-lg hover:shadow-xl ${
+            selectedCategory === category
+              ? "bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
+              : "hover:bg-primary/10"
+          }`}
         >
           {getCategoryIcon(category)}
           {category}
