@@ -1,9 +1,22 @@
 import React, { useState } from "react";
 import NewsCard from "@/components/NewsCard";
 import CategoryFilter from "@/components/CategoryFilter";
-import { Newspaper } from "lucide-react";
+import { Newspaper, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { generateArticle } from "@/lib/gemini";
+import { toast } from "sonner";
 
-const mockNews = [
+interface Article {
+  id: number;
+  title: string;
+  summary: string;
+  category: "AI" | "Crypto";
+  date: string;
+  source: string;
+}
+
+const mockNews: Article[] = [
   {
     id: 1,
     title: "OpenAI Releases GPT-4 Turbo with Enhanced Capabilities",
@@ -42,10 +55,40 @@ const categories = ["AI", "Crypto", "Tutorials", "Benchmarks"];
 
 const Index = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [articles, setArticles] = useState<Article[]>(mockNews);
+  const [apiKey, setApiKey] = useState("");
+  const [topic, setTopic] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const filteredNews = selectedCategory === "all" 
-    ? mockNews 
-    : mockNews.filter(news => news.category === selectedCategory);
+    ? articles 
+    : articles.filter(news => news.category === selectedCategory);
+
+  const handleGenerateArticle = async () => {
+    if (!apiKey) {
+      toast.error("Please enter your Gemini API key");
+      return;
+    }
+    if (!topic) {
+      toast.error("Please enter a topic");
+      return;
+    }
+
+    setIsGenerating(true);
+    try {
+      const newArticle = await generateArticle(apiKey, topic);
+      setArticles(prev => [{
+        ...newArticle,
+        id: prev.length + 1
+      }, ...prev]);
+      toast.success("Article generated successfully!");
+      setTopic("");
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -69,6 +112,36 @@ const Index = () => {
             </p>
           </div>
         </header>
+
+        <div className="max-w-2xl mx-auto mb-8 space-y-4">
+          <Input
+            type="password"
+            placeholder="Enter your Gemini API key"
+            value={apiKey}
+            onChange={(e) => setApiKey(e.target.value)}
+            className="bg-background/50 backdrop-blur-sm"
+          />
+          <div className="flex gap-2">
+            <Input
+              placeholder="Enter a topic for article generation"
+              value={topic}
+              onChange={(e) => setTopic(e.target.value)}
+              className="bg-background/50 backdrop-blur-sm"
+            />
+            <Button
+              onClick={handleGenerateArticle}
+              disabled={isGenerating}
+              className="gap-2"
+            >
+              {isGenerating ? (
+                <div className="animate-spin">⚡</div>
+              ) : (
+                <Plus className="w-4 h-4" />
+              )}
+              Generate
+            </Button>
+          </div>
+        </div>
 
         <CategoryFilter
           categories={categories}
